@@ -9,7 +9,7 @@ const menu = `
 ╭─⚝─⚝─⚝─⚝─⚝─⚝─⚝
 ┃🐈‍⬛»Bot: *${NomeDoBot}*
 ┃╰─»Usuário: *${nome}*
-┃╰─»Minha Versão: *2.0*
+┃╰─»Minha Versão: *${versao}*
 ┃╰─»Biblioteca: *Baileys MD*
 ┃╰─»Dono: *${criador}*
 ┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
@@ -22,6 +22,7 @@ const menu = `
 ┃🫅🏽 DONO
 ┃╰─»${prefix}fotomenu <@imagem>
 ┃╰─»${prefix}setprefix <novo prefixo>
+┃╰─»${prefix}setapikey <nova apikey>
 ┃╰─»${prefix}setnomebot <nome bot>
 ┃╰─»${prefix}setnomedono <nome dono>
 ┃╰─»${prefix}setnumerodono <número dono>

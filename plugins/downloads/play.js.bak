@@ -42,16 +42,16 @@ const video = data1.resultado.texto[0];
 
 const downloadURL = `${urlapi}/api/downloads/youtubemp3?apikey=${apikey}&query=${video.url}`;
 const response2 = await axios.get(downloadURL, {
-headers: {
-...headersPadrao,
-Referer: "https://hobsidian.shop/",
-Origin: "https://hobsidian.shop",
-},
+  headers: {
+    ...headersPadrao,
+    Referer: "https://hobsidian.shop/",
+    Origin: "https://hobsidian.shop",
+  },
 });
 
 const data2 = response2.data;
-const audio = data2?.resultado?.texto || null;
-
+const audio = data2?.dlink; // <-- aqui
+console.log(audio);
 const textoresultado = `
 *🎬 Título:* ${video.title || "não encontrado"}
 *📺 Canal:* ${video.author?.name || "não encontrado"}

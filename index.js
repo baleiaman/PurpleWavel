@@ -1,6 +1,5 @@
 // ==============================
 //Créditos: Tokyo (DAKI INFOS)
-// Inspiração: Takeshi-bot
 // ==============================
 
 
@@ -37,13 +36,16 @@
  * - 📁 ias
  * - 📁 menus
  * - 📁 pesquisas
+ * - 📁 Canvas
+ * - 📁 Brincadeiras 
+ * - 📁 Logos
  *
  * O nome das pastas já é auto explicativo
  *
  * ---------------- 🤖 ONDE MODIFICO O MENU? 🤖 ----------------
  *
  * Abra a pasta "plugins"
- * Vá no arquivo "menu.js" e edite o menu!
+ * Vá no arquivo "menu.js" e edite o menu! (isso vale para todos os menus dentro de ./plugins/menus)
  * Só lembrando, faça tudo dentro das crases (`), pois é um template string!
  *
  * Não entendeu?
@@ -59,7 +61,6 @@
  * A troca é feita automáticamente 
  *
  * Créditos: Tokyo (DAKI INFOS)
- * Inspiração: Takeshi-bot
  *
  * Não modifique nada abaixo, a não ser que saiba o que está fazendo!
  */

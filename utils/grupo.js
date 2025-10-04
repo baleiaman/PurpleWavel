@@ -28,9 +28,9 @@ if (fs.existsSync(filePath)) return;
 try {
 const initialData = {
 antilinkgp: false,
-antilinkchannel: false,
 bemvindo: false,
 bemvindo2: false,
+antiimg: false,
 bangp: false,
 modobrincadeira: false
 };

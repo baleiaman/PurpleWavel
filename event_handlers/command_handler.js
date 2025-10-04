@@ -1,4 +1,5 @@
 "use strict";
+const path = require("path");
 Object.defineProperty(module.exports, "__esModule", { value: true });
 function normalizeJid(jid) {
 if (!jid) return null;
@@ -93,6 +94,7 @@ const config = lerConfig();
 const numerodono = config.criadorNumber + "@s.whatsapp.net";
 const dono = sender === numerodono || info.key.fromMe;
 
+const versao = config.versao
 let grupoConfig = {};
 
 if (grupoConfig.bangp && !dono) continue;
@@ -183,9 +185,40 @@ quoted: quoted ? info : undefined
 }
 
 if (isGroup) {
-  grupoConfig = await getGrupoConfig(from); 
+grupoConfig = await getGrupoConfig(from); 
 }
 let modobrincadeira = grupoConfig.modobrincadeira;
+
+const bloqueadosPath = path.join(__dirname, "..", "json", "bloqueados.json");
+
+function carregarBloqueados() {
+let bloqueados = [];
+try {
+if (fs.existsSync(bloqueadosPath)) {
+const data = fs.readFileSync(bloqueadosPath, "utf-8");
+bloqueados = JSON.parse(data);
+} else {
+console.warn("Arquivo bloqueados.json não encontrado. Criando um novo array vazio.");
+}
+} catch (err) {
+console.error("Erro ao ler ou parsear bloqueados.json:", err);
+bloqueados = [];
+}
+return bloqueados;
+}
+
+
+function adicionarBloqueado(id) {
+const bloqueados = carregarBloqueados();
+
+if (!bloqueados.includes(id)) {
+bloqueados.push(id);
+fs.writeFileSync(bloqueadosPath, JSON.stringify(bloqueados, null, 2), "utf-8");
+console.log(`ID ${id} adicionado à lista de bloqueados.`);
+} else {
+console.log(`ID ${id} já está na lista de bloqueados.`);
+}
+}
 
 Object.assign(ctx, {
 info,
@@ -214,7 +247,12 @@ groupAdmins,
 sender,
 menc_jid,
 normalizeJid,
-config
+config,
+lergrupo,
+carregarBloqueados,
+adicionarBloqueado,
+numerodono,
+versao
 });
 
 creategrupo();
@@ -229,13 +267,17 @@ console.log(`🚫 Mensagem privada bloqueada de ${sender}`);
 continue; 
 }
 
+
 async function executarComando(comandoDigitado) {
 try {
 if (!ctx.fs.existsSync(ctx.pluginsDir)) return false;
+
 const arquivosJs = ctx.puxararquivos(ctx.pluginsDir);
+
 for (const file of arquivosJs) {
 delete require.cache[require.resolve(file)];
 const comandoModule = require(file);
+
 if (!comandoModule.nomes || !comandoModule.run) continue;
 
 const nomesValidos = Array.isArray(comandoModule.nomes)
@@ -243,12 +285,35 @@ const nomesValidos = Array.isArray(comandoModule.nomes)
 : [comandoModule.nomes.toLowerCase()];
 
 if (nomesValidos.includes(comandoDigitado.toLowerCase())) {
+if (config.apikey === "SUAKEY" && comandoDigitado.toLowerCase() !== "setapikey") {
+return enviar(`⚠️ APIKEY NÃO CONFIGURADA
+[1️⃣] acesse: ${config.urlapi}
+
+[2️⃣] crie sua conta se não tiver uma 
+
+[3️⃣] Acesse seu perfil em ${config.urlapi}/profile
+
+[4️⃣] Copie sua chave API
+
+[5️⃣] Use o comando ${config.prefix}setapikey SuaChaveApi
+
+[6️⃣] Se sua chave API for: tokyo20
+
+[7️⃣] Use: ${config.prefix}setapikey tokyo20
+
+[8️⃣] O bot vai ser executado normalmente!
+
+[9️⃣] Não conseguiu? chame: wa.me/553285076326
+`);
+}
+
 Object.assign(global, ctx);
 await comandoModule.run();
 console.log(`✅ Comando executado: ${comandoDigitado} (arquivo: ${file})`);
 return true;
 }
 }
+
 return false;
 } catch (err) {
 console.error("❌ Erro ao executar comando:", err);
@@ -256,6 +321,7 @@ return false;
 }
 }
 //NÃO MEXER
+
 // ===============================
 // 1️⃣ Extrair texto da mensagem
 // ===============================
@@ -267,6 +333,7 @@ if (!comandoRaw) continue;
 // ===============================
 // 2️⃣ Detectar comando
 // ===============================
+
 if (config.usarprefixo) {
 if (comandoRaw.startsWith(config.prefix)) {
 const semPrefixo = comandoRaw.slice(config.prefix.length).trim();
@@ -286,18 +353,24 @@ console.log(`> 🔍 Procurando comando: ${comandoDigitado}`);
 // ===============================
 // 3️⃣ Verificar comandos bloqueados
 // ===============================
+
+
+
+
 let bloqueados = [];
 try {
-bloqueados = JSON.parse(fs.readFileSync("../../Json/bloqueados.json", "utf-8"));
+if (!fs.existsSync(bloqueadosPath)) {
+fs.writeFileSync(bloqueadosPath, "[]", "utf-8");
+}
+bloqueados = JSON.parse(fs.readFileSync(bloqueadosPath, "utf-8"));
 } catch (err) {
 console.error("Erro ao ler bloqueados.json:", err);
 bloqueados = [];
 }
-
 if (bloqueados.includes(comandoDigitado)) {
 console.log(`🚫 Comando bloqueado: ${comandoDigitado}`);
 await enviar("❌ Este comando foi bloqueado pelo meu dono.");
-continue; // não executa nada
+continue;
 }
 
 // ===============================

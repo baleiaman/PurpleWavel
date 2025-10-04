@@ -1,5 +1,5 @@
 module.exports = {
-nomes: ["menu"],
+nomes: ["menucanvas"],
 uso: [""],
 run: async () => {
 aumentartotalcmds();
@@ -12,22 +12,14 @@ const menu = `
 ┃╰─»Biblioteca: *Baileys MD*
 ┃╰─»Dono: *${criador}*
 ┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
-┃📄𝘓𝘐𝘚𝘛𝘈 𝘋𝘌 𝘔𝘌𝘕𝘜𝘚
-┃╰─»${prefix}Menudono
-┃╰─»${prefix}Menuadm
-┃╰─»${prefix}Menuias
-┃╰─»${prefix}Menudonwloads
-┃╰─»${prefix}Menuferramentas
-┃╰─»${prefix}Menupesquisas
-┃╰─»${prefix}Menulogos
-┃╰─»${prefix}Menucanvas
-┃╰─»${prefix}Menubrincadeiras
-┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
 ┃⚙️𝘐𝘕𝘍𝘖𝘚 
 ┃╰─»${prefix}Ping
 ┃╰─»${prefix}Dados
 ┃╰─»${prefix}Infodono
 ┃╰─»${prefix}Infocmd <comando>
+┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
+┃🎉 CANVAS
+┃╰─»${prefix}bolsonaro @imagem
 ╰─⚝─⚝─⚝─⚝─⚝─⚝─⚝
 `;
 await bot.sendMessage(

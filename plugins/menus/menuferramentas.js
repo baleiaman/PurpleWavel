@@ -8,7 +8,7 @@ const menu = `
 ╭─⚝─⚝─⚝─⚝─⚝─⚝─⚝
 ┃🐈‍⬛»Bot: *${NomeDoBot}*
 ┃╰─»Usuário: *${nome}*
-┃╰─»Minha Versão: *2.0*
+┃╰─»Minha Versão: *${versao}*
 ┃╰─»Biblioteca: *Baileys MD*
 ┃╰─»Dono: *${criador}*
 ┝─⚝─⚝─⚝─⚝─⚝─⚝─⚝
